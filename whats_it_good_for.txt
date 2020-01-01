@@ -1,0 +1,21 @@
+
+This is a Ruby parser, written in Ruby. It is a recursive descent parser.
+What is it good for?
+The source code can be useful in an educational context; the source code is not difficult to understand.
+So ... outside of an educational setting, is this parser no more than a toy?
+No.
+
+With a bit more work, the parser can be used for CODE VALIDATION, possibly in the context of a Rails project. You are about to run a sample of Ruby code, you have certain assumptions about what the code does not try to do. Parse the code snippet, and if these assumptions are violated, do not run the code. Security might be one of several considerations.
+
+Another use: a "Ruby+Rails" -> PHP transpiler, so that some (not all) Rails apps can run on very cheap "shared hosting" servers. (They charge more for Rails).
+
+Another use: to help in developing "RubyStat", statistical analysis (and graphs) in a Ruby environment. 
+Late to the party, you might say. No point in trying. Let me share a little secret: the user interfaces for Python data science are very non-user-friendly. It's a fact, look through the hype. And the less I say about R's syntax and semantics, the better.
+RubyStat could provide huge benefits, IF DESIGNED PROPERLY.
+
+###############################################################
+
+
+One could also use this parser as a starting point for developing a top-notch serious Ruby parser written in Common Lisp. You probably don't know what the practical implications are, but the implications could be enormous (like, um, efficiency + flexibility + malleability + extensibility ). (Of course, you must have a minimum of Lisp developers who actually care about programming languages intended for mere mortals, that is a political obstacle.)
+
+This is not a toy. There are a lot of possible uses.

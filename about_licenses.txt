@@ -1,0 +1,39 @@
+
+I have developed the following software projects (not an exhaustive list)
+
+1. Vilno Data Transformation
+Since 2007, available under the terms of: GNU General Public License version 2
+At the time, I read and evaluated this license.
+Vilno Data Transformation was sometimes referred to as simply 
+"Vilno" or "Data Crunch", in the years before Vilno Table was developed
+
+2. Vilno Table
+This product is not available under any open source license. Vilno Table and 
+Vilno Data Transformation are two distinct software products. Since Vilno Table
+is not an open source project, the source code is not posted on my GitHub 
+account. Vilno Table can be configured to inter-operate with a data 
+transformation engine other than VDT, if desired (such as an SQL database).
+
+3. Some Date and Time code, written in C++
+This is a very small source code base, needs to be finished , and for a very 
+specific purpose: to manage dates and times that may have partially missing 
+data or erroneous entries (like February 31, 2018). The standard libraries in 
+C and C++ do not deal well with DIRTY date/time data, hence this code.
+I uploaded an unfinished version of this code to my GitHub account in 
+August/September 2019.
+I haven't chosen a license yet. I intend to release this code under some
+BSD/MIT style license (when I have had time to evaluate the text in such 
+licenses) , or I will release this code under both a BSD/MIT license and the
+GNU General Public License version 2
+
+
+4. Ruby parser
+I am uploading this Ruby parser to my GitHub account as of December 2019.
+I am making this software available under the terms of:
+GNU General Public License version 2
+(the same open source license under which I released Vilno Data Transformation
+ back in 2007)
+After I have had time to evaluate the range of available MIT/BSD style licenses
+, I intend to also release the Ruby parser under one of those licenses. 
+
+

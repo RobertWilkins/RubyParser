@@ -1,0 +1,67 @@
+
+I believe one critical advantage of this Ruby parser is that the source code is easy to read - when compared to most open source projects (that others developed), and when compared to previous projects that I have worked on ( Vilno Data Transformation, Vilno Table, with the exception of the DateTime functions I developed (also posted on the same GitHub account) - but only because the DateTime code is quite small and quite specific in functionality, not a fair comparison).
+
+This Ruby parser is not bottom-up, it is top-down. It is a recursive descent parser, which is sometimes more intuitive and easier to read (the source code is easier to read) than a carefully optimized bottom-up parser.
+
+There are different types of expressions in Ruby:
+"+ -" expressions   (obviously, addition and subtraction)
+"* / %" expressions (multiplication, division, and also integer remainder)
+if-elsif-else expressions
+case expressions
+while loops
+for loops
+Ruby code blocks
+method invocations
+method definitions
+... and so on.
+
+For each type of expression, the Ruby parser provides a class.
+Usually, each parse class has a parse method.
+
+To illustrate, consider one type of Ruby expression as an example, consider the "+ -" expression (the expression for sums and subtraction):
+The Ruby parser has a "+ -" class for this (actually the class name is PlusMinusExpr).
+An instance of this class is a data structure that represents a syntax tree for an expression like:
+7 + 8*age + 18.2 - x/3    (this is a "+ -" expression, addition and subtraction)
+
+The parse method for this class is a function that "tries" to return a syntax tree for a "+-" expression. This parse method WILL return a "+-" syntax tree IF it finds any +- operators (not nested inside parentheses). Otherwise, it will return a syntax tree for another type of expression (usually it will return a syntax tree for operators of higher precedence than the +- operators (or no operators at all, just a variable name or number literal or such), but if the parse method finds a single expression inside parentheses, it could return any kind of expression)
+
+For the most part, that's it: a recursive descent parser is simply a set of parse functions that call each other in a recursive manner. There are a few complications, but that is the general idea.
+
+
+#######################################################################
+
+Of course, when reading the source code, you'll encounter some additional organizational details.
+
+The main parse functions that I've just explained do not read off of the original text. The parse functions read from the token stream, an array of tokens, $strm is this array of tokens, $tc is the "token location" counter ( if $tc is 114, then $strm[114] is the next token to read). The function tokenize() creates the array of tokens from the original input string.
+
+The module CloseToTokens contains a large number of "mini-parse" functions that the main parse functions utilize. These "mini-parse" functions read directly from $strm (the token stream) , and update the "token location" counter ( $tc ), are highly localized and not at all recursive. Typically they process one or two tokens at a time. By doing this nitty-gritty work, the code inside the main parse functions is less cluttered.
+
+
+
+Here's one example that gives you the basic idea: a function that reads in (from the token array) a variable name or constant name or method name. The function returns that information, or returns false if such an expression is not there. If the function does find the expected information, it updates the "token location counter". If the function does not find what it is looking for, the "token location counter" is not incremented. These "mini-parse" functions read from the global variable $strm and update the global variable $tc (the counter). There are a large number of functions in the module CloseToTokens that do this sort of "close-to-the-tokens" nitty-gritty boring work. Yes, writing the functions that go into this module is boring stuff, but as a result, the code in the main parse functions has a lot less clutter. And that means the code in the main parse functions is easier to read.
+
+
+#######################################################################
+
+
+For just a few Ruby expressions (such as the definition of a method or the definition of a code block), the corresponding parse functions might need a little bit more information about the surrounding context.
+For that reason, there is at least a minimal stack (conveniently, the global variable $stack). Typically this is for tracking local variable names in a variety of scopes. For the vast majority of Ruby expressions ( +,-,*,/ ,for example ), it is not necessary to push a class instance onto this stack.
+
+In addition to $stack, there are a few "global context flags" that answer questions such as: is the expression currently being read INSIDE a method invocation, or inside the sub-clause of a for loop?
+
+This very brief introduction should help you to read the source code. 
+Good luck.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
